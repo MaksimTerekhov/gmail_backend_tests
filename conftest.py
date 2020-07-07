@@ -16,7 +16,6 @@ def pytest_addoption(parser):
         },
         '--recipient_password': {
             'help': 'Just user password',
-            'default': '41b7a4159753'
         },
         '--sender': {
             'help': 'Existing google user',
@@ -24,7 +23,6 @@ def pytest_addoption(parser):
         },
         '--sender_password': {
             'help': 'Just user password',
-            'default': '41b7a4159753'
         }
     }
 
