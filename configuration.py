@@ -1,9 +1,9 @@
 from attr import dataclass
 
-from helpers.imap_client import ImapEndpoint
+from helpers.endpoint_class import Endpoint
 
 
 @dataclass
 class TestSettings:
-    imap_endpoint = ImapEndpoint('imap.gmail.com', 993)
-    smtp_endpoint = ''
+    imap_endpoint = Endpoint('imap.gmail.com', 993)
+    smtp_endpoint = Endpoint('smtp.gmail.com', 465)
