@@ -1,17 +1,12 @@
 from imaplib import IMAP4_SSL
 from socket import gaierror
 
+from helpers.endpoint_class import Endpoint
 from helpers.user_class import User
 
 
-class ImapEndpoint:
-    def __init__(self, host: str, port: int):
-        self.host = host
-        self.port = port
-
-
 class ImapClient:
-    def __init__(self, user: User, imap_endpoint: ImapEndpoint):
+    def __init__(self, user: User, imap_endpoint: Endpoint):
         self.user = user
 
         try:
@@ -25,10 +20,7 @@ class ImapClient:
                 f'{imap_endpoint.host}:{imap_endpoint.port}')
 
     def login(self):
-        self.client.login(
-            user=self.user.email,
-            password=self.user.password
-        )
+        self.client.login(self.user.email, self.user.password)
 
     def log_out(self):
         self.mailbox_cleanup()
