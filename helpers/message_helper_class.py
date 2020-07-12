@@ -26,13 +26,13 @@ class MessageHelper:
             recipients: List[User] = None
     ):
         msg = MIMEText(body)
+
+        # TODO: create set_headers func
         msg.add_header('Subject', subject)
         msg.add_header('From', sender or self.sender.email)
         msg.add_header('test-id', random_ascii_string(12))
-
-        if recipients is None:
-            recipients = self.recipient
-        msg.add_header('To', ', '.join([usr.email for usr in recipients]))
+        msg.add_header('To', recipients or
+                       ', '.join([usr.email for usr in recipients]))
 
         return msg
 
