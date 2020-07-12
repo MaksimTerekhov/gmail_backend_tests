@@ -8,7 +8,7 @@ from helpers.user_class import User
 
 @dataclass
 class TestContext:
-    imap_client: ImapClient
+    imap_helper: ImapClient
     message_helper: MessageHelper
 
 
