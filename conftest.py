@@ -84,7 +84,7 @@ def test_context(
         setup_tests
 ):
     return TestContext(
-        imap_client=imap_client,
+        imap_helper=imap_client,
         message_helper=MessageHelper(
             smtp_client=smtp_client,
             sender=setup_tests.sender,
