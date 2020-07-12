@@ -13,7 +13,7 @@ def waiter(func, *args, seconds: int = 10, **kwargs):
 
     while retry < seconds:
         result = func(*args, **kwargs)
-        if result is not None and not isinstance(result, Exception) and result != ('OK', [b'']):
+        if result is not None and not isinstance(result, Exception) and result != b'':
             return result
 
         time.sleep(1)
