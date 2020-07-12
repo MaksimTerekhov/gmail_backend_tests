@@ -32,8 +32,7 @@ class MessageHelper:
 
         if recipients is None:
             recipients = self.recipient
-        for usr in recipients:
-            msg.add_header('To', usr.email)
+        msg.add_header('To', ', '.join([usr.email for usr in recipients]))
 
         return msg
 
