@@ -1,7 +1,7 @@
 import email
 from imaplib import IMAP4_SSL
 from socket import gaierror
-from typing import List, Dict
+from typing import Dict
 
 from attr import dataclass
 
@@ -69,5 +69,6 @@ class ImapClient:
         self.mailbox_cleanup()
         self.client.logout()
 
+    # TODO: func must delete only tests messages
     def mailbox_cleanup(self):
         pass

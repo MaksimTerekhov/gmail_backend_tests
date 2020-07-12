@@ -7,6 +7,7 @@ from helpers.smtp_client import SmtpClient
 from helpers.user_class import User
 
 
+# TODO: create other func for creating other messages with diff mime_types
 class MessageHelper:
     def __init__(
             self,

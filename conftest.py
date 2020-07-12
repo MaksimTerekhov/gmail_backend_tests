@@ -1,11 +1,14 @@
 import pytest
 
 from configuration import TestSettings
-from helpers.imap_client import ImapClient
-from helpers.message_helper_class import MessageHelper
-from helpers.setup_test_helpers import TestContext, Configuration
-from helpers.smtp_client import SmtpClient
-from helpers.user_class import User
+from helpers import (
+    ImapClient,
+    MessageHelper,
+    TestContext,
+    Configuration,
+    SmtpClient,
+    User,
+)
 
 
 def pytest_addoption(parser):

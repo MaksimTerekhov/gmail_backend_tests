@@ -1,4 +1,4 @@
-from helpers.imap_client import MailboxFolders
+from helpers import MailboxFolders
 
 test_body = 'just test message body'
 test_subject = 'just test message subject'
