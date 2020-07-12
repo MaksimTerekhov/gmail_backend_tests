@@ -2,6 +2,7 @@ from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
 from typing import List
 
+from helpers.extra_helpers import random_ascii_string
 from helpers.smtp_client import SmtpClient
 from helpers.user_class import User
 
@@ -27,6 +28,7 @@ class MessageHelper:
         msg = MIMEText(body)
         msg.add_header('Subject', subject)
         msg.add_header('From', sender or self.sender.email)
+        msg.add_header('test-id', random_ascii_string(12))
 
         if recipients is None:
             recipients = self.recipient
