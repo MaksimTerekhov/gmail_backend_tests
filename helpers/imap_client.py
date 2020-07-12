@@ -6,6 +6,7 @@ from typing import List, Dict
 from attr import dataclass
 
 from helpers.endpoint_class import Endpoint
+from helpers.extra_helpers import waiter
 from helpers.user_class import User
 
 
@@ -14,6 +15,13 @@ class MailboxFolders:
     INBOX = 'INBOX'
     SENT = '"[Gmail]/Sent Mail"'
     SPAM = '"[Gmail]/Spam"'
+
+
+class MessageNotFoundError(Exception):
+    message: str = 'Message was not found in mailbox by search args: {args}'
+
+    def __init__(self, fields: Dict):
+        super().__init__(self.message.format(args=fields))
 
 
 class ImapClient:
@@ -33,14 +41,26 @@ class ImapClient:
     def login(self):
         self.client.login(self.user.email, self.user.password)
 
-    def _get_msg_id_by_params(self, params: Dict):
-        prms = ''.join([f'(HEADER {k} "{v}")' for k, v in params.items()])
-        return self.client.search(None, prms)[1][0]
+    @staticmethod
+    def _prepare_search_params(params: Dict):
+        return ''.join([f'(HEADER {k} "{v}")' for k, v in params.items()])
+
+    def _get_msg_id_from_folder_by_params(self, folder: str, params: Dict):
+        self.client.select(folder)
+        prms = self._prepare_search_params(params)
+        msg_ids = self.client.search(None, prms)
+
+        if msg_ids is not None:
+            return msg_ids[1][0]
+        raise MessageNotFoundError(params)
 
     def get_folder_content_by_params(self, folder: str, params: Dict):
-        self.client.select(folder)
-        msg_id = self._get_msg_id_by_params(params)
-
+        msg_id = waiter(
+            func=self._get_msg_id_from_folder_by_params,
+            folder=folder,
+            params=params,
+            seconds=30
+        )
         _, bytes_msg = self.client.fetch(msg_id, '(RFC822)')
         return email.message_from_bytes(bytes_msg[0][1])
 
