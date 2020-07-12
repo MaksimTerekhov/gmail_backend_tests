@@ -48,10 +48,10 @@ class ImapClient:
     def _get_msg_id_from_folder_by_params(self, folder: str, params: Dict):
         self.client.select(folder)
         prms = self._prepare_search_params(params)
-        msg_ids = self.client.search(None, prms)
+        _, msg_ids = self.client.search(None, prms)
 
-        if msg_ids is not None:
-            return msg_ids[1][0]
+        if msg_ids != [b'']:
+            return msg_ids[0]
         raise MessageNotFoundError(params)
 
     def get_folder_content_by_params(self, folder: str, params: Dict):
@@ -59,7 +59,8 @@ class ImapClient:
             func=self._get_msg_id_from_folder_by_params,
             folder=folder,
             params=params,
-            seconds=30
+            seconds=30,
+            retry_exception=MessageNotFoundError
         )
         _, bytes_msg = self.client.fetch(msg_id, '(RFC822)')
         return email.message_from_bytes(bytes_msg[0][1])
