@@ -25,15 +25,16 @@ class MessageHelper:
             subject: str = 'test',
             sender: User = None,
             recipients: List[User] = None
-    ):
+    ) -> MIMEText:
         msg = MIMEText(body)
 
         # TODO: create set_headers func
         msg.add_header('Subject', subject)
         msg.add_header('From', sender or self.sender.email)
         msg.add_header('test-id', random_ascii_string(12))
-        msg.add_header('To', recipients or
-                       ', '.join([usr.email for usr in recipients]))
+
+        rcpt = recipients or self.recipient
+        msg.add_header('To', ', '.join([usr.email for usr in rcpt]))
 
         return msg
 
@@ -41,7 +42,8 @@ class MessageHelper:
             self,
             msg: MIMEBase,
             sender: User = None,
-            recipients: User = None):
+            recipients: List[User] = None
+    ):
         self.smtp_client.send(
             message=msg,
             sender=sender or self.sender,
