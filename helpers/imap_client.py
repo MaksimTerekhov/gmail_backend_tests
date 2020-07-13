@@ -1,4 +1,5 @@
 import email
+from email.message import Message
 from imaplib import IMAP4_SSL
 from socket import gaierror
 from typing import Dict
@@ -42,10 +43,14 @@ class ImapClient:
         self.client.login(self.user.email, self.user.password)
 
     @staticmethod
-    def _prepare_search_params(params: Dict):
+    def _prepare_search_params(params: Dict) -> str:
         return ''.join([f'(HEADER {k} "{v}")' for k, v in params.items()])
 
-    def _get_msg_id_from_folder_by_params(self, folder: str, params: Dict):
+    def _get_msg_id_from_folder_by_params(
+            self,
+            folder: str,
+            params: Dict
+    ) -> str:
         self.client.select(folder)
         prms = self._prepare_search_params(params)
         _, msg_ids = self.client.search(None, prms)
@@ -54,7 +59,11 @@ class ImapClient:
             return msg_ids[0]
         raise MessageNotFoundError(params)
 
-    def get_folder_content_by_params(self, folder: str, params: Dict):
+    def get_folder_content_by_params(
+            self,
+            folder: str,
+            params: Dict
+    ) -> Message:
         msg_id = waiter(
             func=self._get_msg_id_from_folder_by_params,
             folder=folder,
