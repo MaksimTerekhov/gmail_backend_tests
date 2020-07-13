@@ -1,6 +1,9 @@
 from email.mime.base import MIMEBase
 from smtplib import SMTP_SSL
-from typing import List
+from typing import (
+    Dict,
+    List,
+)
 
 from helpers.endpoint_class import Endpoint
 from helpers.user_class import User
@@ -14,9 +17,14 @@ class SmtpClient:
     def login(self):
         self.client.login(self.sender.email, self.sender.password)
 
-    def send(self, message: MIMEBase, sender: User, recipients: List[User]):
+    def send(
+            self,
+            message: MIMEBase,
+            sender: User,
+            recipients: List[User]
+    ) -> Dict:
         rcpts = [user.email for user in recipients]
-        self.client.send_message(message, sender.email, rcpts)
+        return self.client.send_message(message, sender.email, rcpts)
 
     def close(self):
         self.client.quit()

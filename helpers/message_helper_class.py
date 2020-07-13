@@ -44,7 +44,7 @@ class MessageHelper:
             sender: User = None,
             recipients: List[User] = None
     ):
-        self.smtp_client.send(
+        return self.smtp_client.send(
             message=msg,
             sender=sender or self.sender,
             recipients=recipients or self.recipient
