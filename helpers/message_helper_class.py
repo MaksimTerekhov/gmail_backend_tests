@@ -1,6 +1,9 @@
 from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
-from typing import List
+from typing import (
+    Dict,
+    List,
+)
 
 from helpers.extra_helpers import random_ascii_string
 from helpers.smtp_client import SmtpClient
@@ -43,7 +46,7 @@ class MessageHelper:
             msg: MIMEBase,
             sender: User = None,
             recipients: List[User] = None
-    ):
+    ) -> Dict:
         return self.smtp_client.send(
             message=msg,
             sender=sender or self.sender,
