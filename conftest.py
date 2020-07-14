@@ -2,10 +2,12 @@ import pytest
 
 from configuration import TestSettings
 from helpers import (
-    ImapClient,
+    Configuration,
     MessageHelper,
     TestContext,
-    Configuration,
+)
+from utils import (
+    ImapClient,
     SmtpClient,
     User,
 )

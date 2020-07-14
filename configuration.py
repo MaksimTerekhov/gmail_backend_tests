@@ -1,6 +1,6 @@
 from attr import dataclass
 
-from helpers import Endpoint
+from utils import Endpoint
 
 
 @dataclass

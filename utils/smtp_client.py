@@ -5,8 +5,8 @@ from typing import (
     List,
 )
 
-from helpers.endpoint_class import Endpoint
-from helpers.user_class import User
+from .endpoint_class import Endpoint
+from .user_class import User
 
 
 class SmtpClient:

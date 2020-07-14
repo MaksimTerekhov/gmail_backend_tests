@@ -5,9 +5,11 @@ from typing import (
     List,
 )
 
-from helpers.extra_helpers import random_ascii_string
-from helpers.smtp_client import SmtpClient
-from helpers.user_class import User
+from utils import (
+    SmtpClient,
+    User,
+)
+from .helpers import random_ascii_string
 
 
 # TODO: create other func for creating other messages with diff mime_types

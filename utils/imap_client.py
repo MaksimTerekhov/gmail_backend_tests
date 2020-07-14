@@ -4,18 +4,9 @@ from imaplib import IMAP4_SSL
 from socket import gaierror
 from typing import Dict
 
-from attr import dataclass
-
-from helpers.endpoint_class import Endpoint
-from helpers.extra_helpers import waiter
-from helpers.user_class import User
-
-
-@dataclass
-class MailboxFolders:
-    INBOX = 'INBOX'
-    SENT = '"[Gmail]/Sent Mail"'
-    SPAM = '"[Gmail]/Spam"'
+from .endpoint_class import Endpoint
+from .user_class import User
+from .waiter import waiter
 
 
 class MessageNotFoundError(Exception):

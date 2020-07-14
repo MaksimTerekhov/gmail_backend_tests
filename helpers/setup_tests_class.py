@@ -1,9 +1,11 @@
 from attr import dataclass
 
-from helpers.endpoint_class import Endpoint
-from helpers.imap_client import ImapClient
-from helpers.message_helper_class import MessageHelper
-from helpers.user_class import User
+from helpers import MessageHelper
+from utils import (
+    Endpoint,
+    ImapClient,
+    User,
+)
 
 
 @dataclass
