@@ -2,7 +2,7 @@ import pytest
 
 from configuration import TestSettings
 from helpers import (
-    Configuration,
+    SetupConfig,
     MessageHelper,
     TestContext,
 )
@@ -36,7 +36,7 @@ def pytest_addoption(parser):
 
 
 @pytest.fixture
-def setup_tests(request):
+def setup_test_context(request):
     recipient = User(
         email=request.config.getoption('--recipient'),
         password=request.config.getoption('--recipient_password')
@@ -48,7 +48,7 @@ def setup_tests(request):
     imap_endpoint = TestSettings.imap_endpoint
     smtp_endpoint = TestSettings.smtp_endpoint
 
-    return Configuration(
+    return SetupConfig(
         recipient=recipient,
         sender=sender,
         imap_endpoint=imap_endpoint,
@@ -57,10 +57,10 @@ def setup_tests(request):
 
 
 @pytest.fixture
-def imap_client(setup_tests):
+def imap_client(setup_test_context):
     client = ImapClient(
-        user=setup_tests.recipient,
-        imap_endpoint=setup_tests.imap_endpoint
+        user=setup_test_context.recipient,
+        imap_endpoint=setup_test_context.imap_endpoint
     )
     client.login()
 
@@ -70,10 +70,10 @@ def imap_client(setup_tests):
 
 
 @pytest.fixture
-def smtp_client(setup_tests):
+def smtp_client(setup_test_context):
     client = SmtpClient(
-        endpoint=setup_tests.smtp_endpoint,
-        sender=setup_tests.sender
+        endpoint=setup_test_context.smtp_endpoint,
+        sender=setup_test_context.sender
     )
     client.login()
 
@@ -84,15 +84,15 @@ def smtp_client(setup_tests):
 
 @pytest.fixture
 def test_context(
-        imap_client: ImapClient,
-        smtp_client: SmtpClient,
-        setup_tests
+        imap_client,
+        smtp_client,
+        setup_test_context
 ):
     return TestContext(
         imap_helper=imap_client,
         message_helper=MessageHelper(
             smtp_client=smtp_client,
-            sender=setup_tests.sender,
-            recipient=[setup_tests.recipient]
+            sender=setup_test_context.sender,
+            recipient=[setup_test_context.recipient]
         )
     )

@@ -15,7 +15,7 @@ class TestContext:
 
 
 @dataclass
-class Configuration:
+class SetupConfig:
     recipient: User
     sender: User
     imap_endpoint: Endpoint
