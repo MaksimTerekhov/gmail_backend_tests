@@ -9,10 +9,13 @@ from utils import (
     SmtpClient,
     User,
 )
-from .helpers import random_ascii_string
+from .helpers import (
+    EmailHeaders,
+    msg_settings,
+    random_ascii_string,
+)
 
 
-# TODO: create other func for creating other messages with diff mime_types
 class MessageHelper:
     def __init__(
             self,
@@ -24,23 +27,36 @@ class MessageHelper:
         self.sender = sender
         self.recipient = recipient
 
-    def create_simple_text_message(
+    @staticmethod
+    def set_headers(message: MIMEBase, headers: Dict[str, str]):
+        for hdr_name, hdr_value in headers.items():
+            if message[hdr_name]:
+                message.replace_header(hdr_name, hdr_value)
+            else:
+                message.add_header(hdr_name, hdr_value)
+        return message
+
+    def create_message(
             self,
+            msg_type: msg_settings,
             body: str = 'test',
             subject: str = 'test',
             sender: User = None,
-            recipients: List[User] = None
+            recipients: List[User] = None,
+            set_test_id_header: bool = False,
     ) -> MIMEText:
-        msg = MIMEText(body)
+        rcpt = ', '.join([usr.email for usr in recipients or self.recipient])
 
-        # TODO: create set_headers func
-        msg.add_header('Subject', subject)
-        msg.add_header('From', sender or self.sender.email)
-        msg.add_header('test-id', random_ascii_string(12))
+        headers = {
+            EmailHeaders.SUBJECT: subject,
+            EmailHeaders.FROM: sender or self.sender.email,
+            EmailHeaders.TO: rcpt
+        }
+        if set_test_id_header:
+            headers.update({EmailHeaders.TEST_ID: random_ascii_string(12)})
 
-        rcpt = recipients or self.recipient
-        msg.add_header('To', ', '.join([usr.email for usr in rcpt]))
-
+        msg = msg_type.type(body, msg_type.mime)
+        self.set_headers(msg, headers)
         return msg
 
     def send(

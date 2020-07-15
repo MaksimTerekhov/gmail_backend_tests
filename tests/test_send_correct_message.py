@@ -1,4 +1,7 @@
-from helpers import MailboxFolders
+from helpers import (
+    MailboxFolders,
+    MessageTypes,
+)
 
 test_body = 'just test message body'
 test_subject = 'just test message subject'
@@ -7,9 +10,11 @@ test_subject = 'just test message subject'
 def test_send_correct_message(
     test_context
 ):
-    message = test_context.message_helper.create_simple_text_message(
+    message = test_context.message_helper.create_message(
         body=test_body,
-        subject=test_subject
+        subject=test_subject,
+        set_test_id_header=True,
+        msg_type=MessageTypes.TEXT
     )
     test_context.message_helper.send(message)
 
