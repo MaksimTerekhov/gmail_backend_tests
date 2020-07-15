@@ -1,5 +1,4 @@
 from email.mime.base import MIMEBase
-from email.mime.text import MIMEText
 from typing import (
     Dict,
     List,
@@ -43,17 +42,14 @@ class MessageHelper:
             subject: str = 'test',
             sender: User = None,
             recipients: List[User] = None,
-            set_test_id_header: bool = False,
-    ) -> MIMEText:
+    ) -> MIMEBase:
         rcpt = ', '.join([usr.email for usr in recipients or self.recipient])
-
         headers = {
             EmailHeaders.SUBJECT: subject,
             EmailHeaders.FROM: sender or self.sender.email,
-            EmailHeaders.TO: rcpt
+            EmailHeaders.TO: rcpt,
+            EmailHeaders.TEST_ID: random_ascii_string(9)
         }
-        if set_test_id_header:
-            headers.update({EmailHeaders.TEST_ID: random_ascii_string(12)})
 
         msg = msg_type.type(body, msg_type.mime)
         self.set_headers(msg, headers)

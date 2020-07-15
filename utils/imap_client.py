@@ -1,5 +1,6 @@
 import email
 from email.message import Message
+from email.mime.base import MIMEBase
 from imaplib import IMAP4_SSL
 from socket import gaierror
 from typing import Dict
@@ -50,15 +51,15 @@ class ImapClient:
             return msg_ids[0]
         raise MessageNotFoundError(params)
 
-    def get_folder_content_by_params(
+    def get_message_from_mailbox_folder(
             self,
             folder: str,
-            params: Dict
+            msg: MIMEBase
     ) -> Message:
         msg_id = waiter(
             func=self._get_msg_id_from_folder_by_params,
             folder=folder,
-            params=params,
+            params={'test-id': msg['test-id']},
             seconds=30,
             retry_exception=MessageNotFoundError
         )

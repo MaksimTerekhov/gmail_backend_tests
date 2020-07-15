@@ -13,14 +13,13 @@ def test_send_correct_message(
     message = test_context.message_helper.create_message(
         body=test_body,
         subject=test_subject,
-        set_test_id_header=True,
         msg_type=MessageTypes.TEXT
     )
     test_context.message_helper.send(message)
 
-    actual_message = test_context.imap_helper.get_folder_content_by_params(
+    actual_message = test_context.imap_helper.get_message_from_mailbox_folder(
         folder=MailboxFolders.INBOX,
-        params={'test-id': message['test-id']}
+        msg=message
     )
 
     assert actual_message['Subject'] == test_subject
