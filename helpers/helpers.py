@@ -21,6 +21,7 @@ class EmailHeaders:
     FROM = 'From'
     TEST_ID = 'test-id'
     TO = 'To'
+    CONTENT_TYPE = 'Content-Type'
 
 
 msg_settings = namedtuple('msg_settings', ['type', 'mime'])
