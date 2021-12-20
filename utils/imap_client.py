@@ -34,8 +34,7 @@ class ImapClient:
     def login(self):
         self.client.login(self.user.email, self.user.password)
 
-    @staticmethod
-    def _prepare_search_params(params: Dict) -> str:
+    def _prepare_search_params(self, params: Dict) -> str:
         return ''.join([f'(HEADER {k} "{v}")' for k, v in params.items()])
 
     def _get_msg_id_from_folder_by_params(

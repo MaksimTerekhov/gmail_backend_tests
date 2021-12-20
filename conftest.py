@@ -17,14 +17,12 @@ def pytest_addoption(parser):
     options = {
         '--recipient': {
             'help': 'Existing google user',
-            'default': 'maks.denv.terehov@gmail.com'
         },
         '--recipient_password': {
             'help': 'Just user password',
         },
         '--sender': {
             'help': 'Existing google user',
-            'default': 'mterekhov47@gmail.com'
         },
         '--sender_password': {
             'help': 'Just user password',
@@ -45,14 +43,12 @@ def setup_test_context(request):
         email=request.config.getoption('--sender'),
         password=request.config.getoption('--sender_password')
     )
-    imap_endpoint = TestSettings.imap_endpoint
-    smtp_endpoint = TestSettings.smtp_endpoint
 
     return SetupConfig(
         recipient=recipient,
         sender=sender,
-        imap_endpoint=imap_endpoint,
-        smtp_endpoint=smtp_endpoint
+        imap_endpoint=TestSettings.imap_endpoint,
+        smtp_endpoint=TestSettings.smtp_endpoint
     )
 
 
