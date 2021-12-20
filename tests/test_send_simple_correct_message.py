@@ -8,7 +8,7 @@ test_body = 'just test message body'
 test_subject = 'just test message subject'
 
 
-def test_send_simple_correct_message(
+def test_send_correct_message(
     test_context
 ):
     message = test_context.message_helper.create_message(
@@ -23,5 +23,5 @@ def test_send_simple_correct_message(
         msg=message
     )
 
-    assert actual_message[EmailHeaders.SUBJECT] == test_subject
-    assert test_body in actual_message.get_payload()
+    assert actual_message[EmailHeaders.SUBJECT] == test_subject, 'Unexpected message subject'
+    assert test_body in actual_message.get_payload(), 'Unexpected message body'

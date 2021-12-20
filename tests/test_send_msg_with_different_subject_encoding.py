@@ -48,4 +48,4 @@ def test_send_msg_with_different_subject_encoding(
         msg=message
     )
 
-    assert actual_message[EmailHeaders.SUBJECT] == expected_subject
+    assert actual_message[EmailHeaders.SUBJECT] == expected_subject, 'Unexpected message subject'
