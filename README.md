@@ -1,3 +1,5 @@
+# Repository with tests for gmail
+
 ### How tests basically work:
  - Create email message with different conditions
  - Send message from *sender* to *recipient* with SMTP protocol
