@@ -8,9 +8,9 @@
 ***
 
 ### How run tests:
-After clone the repo just run a command:
-
-```` python3 -m pytest --recipient=??? --recipient_password=??? --sender=??? --sender_password=???````
+- Clone repository
+- ``python -m pip install -r requirements.txt``
+- `` python3 -m pytest --recipient=??? --recipient_password=??? --sender=??? --sender_password=???``
 ***
 
 ### Requirements:
