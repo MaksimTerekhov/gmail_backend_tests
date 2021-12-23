@@ -25,4 +25,4 @@ jobs:
           pip install -r requirements.txt
 
       - name: run tests
-        run: python -m pytest
+        run: python -m pytest --recipient=${{ secrets.RECIPIENT }} --recipient_password=${{ secrets.RECIPIENT_PSWD }} --sender=${{ secrets.SENDER }} --sender_password=${{ secrets.SENDER_PSWD }}
