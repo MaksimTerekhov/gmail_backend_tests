@@ -15,3 +15,7 @@ After clone the repo just run a command:
 
 ### Requirements:
 Both accounts need turn on _"enable IMAP"_ and _"Unsafe applications allowed"_ in **gmail settings**
+Also need to unlock captcha visiting link _https://accounts.google.com/b/0/displayunlockcaptcha_
+
+### CI:
+Every push or merge branch to master triggers gitHub action with test run
