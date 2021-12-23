@@ -39,14 +39,10 @@ def setup_test_context(request):
         email=request.config.getoption('--recipient'),
         password=request.config.getoption('--recipient_password')
     )
-    print(request.config.getoption('--recipient'))
-    print(request.config.getoption('--recipient_password'))
     sender = User(
         email=request.config.getoption('--sender'),
         password=request.config.getoption('--sender_password')
     )
-    print(request.config.getoption('--sender'))
-    print(request.config.getoption('--sender_password'))
 
     return SetupConfig(
         recipient=recipient,
